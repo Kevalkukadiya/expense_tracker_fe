@@ -29,16 +29,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(false);
   }, []);
 
+  // Backend may return the token in a few different places
+  const getAccessToken = (response: ApiSuccessResponse): string | null => {
+    if (response.access) return response.access;
+    if (response.token) return response.token;
+    if (response.access_token) return response.access_token;
+    if (response.data?.tokens?.access) return response.data.tokens.access;
+    if (response.data?.access) return response.data.access;
+    return null;
+  };
+
+  const getUserFromResponse = (response: ApiSuccessResponse): UserProfile | null => {
+    if (response.user) return response.user;
+    if (response.data?.user) return response.data.user;
+    return null;
+  };
+
   const login = async (credentials: LoginRequestPayload): Promise<ApiSuccessResponse> => {
     const response = await authService.login(credentials);
 
-    const authToken = response.token || response.access_token;
+    const authToken = getAccessToken(response);
     if (authToken) {
       tokenStorage.setToken(authToken);
       setToken(authToken);
     }
 
-    const userProfile = response.user;
+    const userProfile = getUserFromResponse(response);
     if (userProfile) {
       tokenStorage.setUser(userProfile);
       setUser(userProfile);
@@ -50,13 +66,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const register = async (userData: RegisterRequestPayload): Promise<ApiSuccessResponse> => {
     const response = await authService.register(userData);
 
-    const authToken = response.token || response.access_token;
+    const authToken = getAccessToken(response);
     if (authToken) {
       tokenStorage.setToken(authToken);
       setToken(authToken);
     }
 
-    const userProfile = response.user;
+    const userProfile = getUserFromResponse(response);
     if (userProfile) {
       tokenStorage.setUser(userProfile);
       setUser(userProfile);

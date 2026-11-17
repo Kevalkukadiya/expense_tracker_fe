@@ -42,9 +42,8 @@ export const LoginForm: React.FC = () => {
 
       setApiSuccess(response.message || 'Login successful! Redirecting...');
 
-      setTimeout(() => {
-        navigate('/');
-      }, 1500);
+      // Go straight to expenses after login (not the home/index page)
+      navigate('/expenses', { replace: true });
     } catch (err: unknown) {
       const errorMessage = getApiErrorMessage(err);
       setApiError(errorMessage);

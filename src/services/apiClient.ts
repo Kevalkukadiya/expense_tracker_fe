@@ -37,12 +37,34 @@ export const getApiErrorMessage = (error: unknown): string => {
   if (axios.isAxiosError(error)) {
     const serverData = error.response?.data as ApiErrorResponse | undefined;
 
-    if (serverData?.message) {
+    // Backend sometimes returns message as an array of field errors
+    if (Array.isArray(serverData?.message)) {
+      const parts: string[] = [];
+      for (const item of serverData.message) {
+        if (typeof item === 'string') {
+          parts.push(item);
+        } else if (item && typeof item === 'object') {
+          for (const [field, value] of Object.entries(item)) {
+            const text = Array.isArray(value) ? value.join(', ') : String(value);
+            parts.push(`${field}: ${text}`);
+          }
+        }
+      }
+      if (parts.length > 0) {
+        return parts.join('; ');
+      }
+    }
+
+    if (typeof serverData?.message === 'string' && serverData.message) {
       return serverData.message;
     }
 
-    if (serverData?.error) {
+    if (typeof serverData?.error === 'string' && serverData.error) {
       return serverData.error;
+    }
+
+    if (typeof serverData?.detail === 'string' && serverData.detail) {
+      return serverData.detail;
     }
 
     if (serverData?.errors && typeof serverData.errors === 'object') {

@@ -29,3 +29,48 @@ export const API_BASE_URL =
 
 export const AUTH_TOKEN_KEY = 'auth_token';
 export const AUTH_USER_KEY = 'auth_user';
+
+export const CATEGORY_OPTIONS = [
+  { value: 'food', label: 'Food' },
+  { value: 'travel', label: 'Travel' },
+  { value: 'shopping', label: 'Shopping' },
+  { value: 'rent', label: 'Rent' },
+  { value: 'bills', label: 'Bills' },
+  { value: 'healthcare', label: 'Healthcare' },
+  { value: 'entertainment', label: 'Entertainment' },
+  { value: 'education', label: 'Education' },
+  { value: 'other', label: 'Other' },
+  { value: 'fuel', label: 'Fuel' },
+];
+
+export const PAYMENT_METHOD_OPTIONS = [
+  { value: 'cash', label: 'Cash' },
+  { value: 'upi', label: 'UPI' },
+  { value: 'credit_card', label: 'Credit Card' },
+  { value: 'debit_card', label: 'Debit Card' },
+  { value: 'bank_transfer', label: 'Bank Transfer' },
+  { value: 'other', label: 'Other' },
+];
+
+export const INCOME_SOURCE_OPTIONS = [
+  { value: 'salary', label: 'Salary' },
+  { value: 'business', label: 'Business' },
+  { value: 'freelance', label: 'Freelance' },
+  { value: 'investment', label: 'Investment' },
+  { value: 'other', label: 'Other' },
+];
+
+export const MONTH_OPTIONS = [
+  { value: '1', label: 'January' },
+  { value: '2', label: 'February' },
+  { value: '3', label: 'March' },
+  { value: '4', label: 'April' },
+  { value: '5', label: 'May' },
+  { value: '6', label: 'June' },
+  { value: '7', label: 'July' },
+  { value: '8', label: 'August' },
+  { value: '9', label: 'September' },
+  { value: '10', label: 'October' },
+  { value: '11', label: 'November' },
+  { value: '12', label: 'December' },
+];

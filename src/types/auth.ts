@@ -23,10 +23,24 @@ export interface UserProfile {
   updated_at?: string;
 }
 
-export interface ApiSuccessResponse<T = unknown> {
+export interface AuthTokens {
+  access?: string;
+  refresh?: string;
+}
+
+export interface ApiSuccessResponse {
   success?: boolean;
+  status?: string;
   message?: string;
-  data?: T;
+  data?: {
+    user?: UserProfile;
+    tokens?: AuthTokens;
+    access?: string;
+    refresh?: string;
+  };
+  // SimpleJWT login returns these at the top level
+  access?: string;
+  refresh?: string;
   token?: string;
   access_token?: string;
   refresh_token?: string;
@@ -34,10 +48,12 @@ export interface ApiSuccessResponse<T = unknown> {
 }
 
 export interface ApiErrorResponse {
-  message?: string;
-  error?: string;
-  errors?: Record<string, string | string[]>;
+  message?: string | Array<string | Record<string, string | string[]>>;
+  error?: string | number;
+  errors?: Record<string, string | string[]> | null;
   status_code?: number;
+  status?: boolean | string;
+  detail?: string;
 }
 
 export type RegisterFormData = RegisterRequestPayload;
